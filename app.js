@@ -3,7 +3,7 @@ const MAX_TIME_MS = (99 * 3600 + 59 * 60 + 59) * 1000;
 
 // 앱 상태 객체
 const state = {
-  options: { chaos: false, variants: true, silhouette: true, grouping: true, unreleased: false },
+  options: { chaos: false, variants: true, silhouette: true, grouping: true, unreleased: false, collab: true },
   students: [],
   revealedList: [],
   revealedSet: new Set(),
@@ -77,7 +77,7 @@ function getTargetColCount() {
   return Math.max(1, Math.min(count, 4));
 }
 
-// 6. 옵션창 어려운 방향(챌린지) 실시간 테두리 하이라이트 갱신
+// 6. 5대 챌린지 모드 테두리 하이라이트 갱신 (콜라보는 챌린지 대상 제외)
 function updateOptionHighlights() {
   const rules = [
     { id: 'chk-chaos', isHard: (el) => el.checked },
@@ -97,7 +97,7 @@ function updateOptionHighlights() {
   });
 }
 
-// 7. 한글 IME 버퍼를 물리적으로 종료시키는 입력창 재생성
+// 7. 한글 IME 버퍼 종료를 위한 입력창 노드 재생성
 function resetAnswerInput() {
   const oldInput = document.getElementById('answerInput');
   if (!oldInput) return null;
@@ -114,7 +114,7 @@ function resetAnswerInput() {
   return newInput;
 }
 
-// 8. 게임 초기화
+// 8. 게임 초기화 (콜라보레이션 학원 필터 적용)
 function initGame() {
   state.options = {
     chaos: document.getElementById('chk-chaos').checked,
@@ -122,11 +122,15 @@ function initGame() {
     silhouette: document.getElementById('chk-silhouette').checked,
     grouping: document.getElementById('chk-grouping').checked,
     unreleased: document.getElementById('chk-unreleased').checked,
+    collab: document.getElementById('chk-collab').checked, // 콜라보 옵션
   };
 
+  // 학생 풀 필터링
   state.students = STUDENTS_DATA.filter(s => {
     if (!state.options.variants && s.isVariant) return false;
     if (!state.options.unreleased && !s.isPlayable) return false;
+    // ⭐ 콜라보레이션 학원 제외 필터 ⭐
+    if (!state.options.collab && s.school === "콜라보레이션") return false;
     return true;
   });
 
@@ -351,23 +355,22 @@ function updateScoreUI() {
   }
 }
 
-// ⭐ 12. 제작자 전용 치트키 실행 함수 ⭐
+// 12. 제작자 전용 치트키
 function executeCheatClear(forceAllHard = false) {
   if (state.isFinished) return;
 
-  // 전체 학생을 정답으로 강제 설정
   state.revealedList = [...state.students];
   state.revealedSet = new Set(state.students.map(s => s.id));
   state.givenUpSet.clear();
 
-  // '올하드' 치트 시 reward.png 특전이 무조건 열리도록 규칙 강제 오버라이드
   if (forceAllHard) {
     state.options = {
       chaos: true,
       variants: true,
       silhouette: false,
       grouping: false,
-      unreleased: true
+      unreleased: true,
+      collab: state.options.collab
     };
   }
 
@@ -382,19 +385,18 @@ function handleInputMatching(inputEl) {
   const query = clean(inputEl.value);
   if (!query) return;
 
-  // ⭐ 제작자 치트키 감지 ⭐
-  if (query === 'makerscheat' || query === 'lilililililllililil') {
+  // 치트키 감지
+  if (query === 'makerscheat' || query === 'dnjkfahnklwejf') {
     resetAnswerInput();
-    executeCheatClear(true); // 올하드 특전(reward.png) 화면으로 즉시 클리어
+    executeCheatClear(true);
     return;
   }
-  if (query === 'ililililllililili' || query === 'lilililillli' || query === 'iiliiiliilll') {
+  if (query === 'djaoifjieoj' || query === 'doncdioan' || query === 'djiaskodjnfioh') {
     resetAnswerInput();
-    executeCheatClear(false); // 현재 옵션 기준으로 전원 정답 클리어
+    executeCheatClear(false);
     return;
   }
 
-  // 일반 학생 매칭
   const matched = state.students.find(student => {
     const alreadyDone = state.options.chaos 
       ? state.revealedList.some(s => s.id === student.id)
@@ -452,7 +454,7 @@ inputWrapper.addEventListener('keydown', (e) => {
 // 15. 포기하기(Give Up) 실행
 function executeGiveUp() {
   if (state.isFinished) return;
-  if (!confirm("퀴즈를 포기하고 남아있는 모든 학생의 정답을 확인하시겠습니까?")) return;
+  if (!confirm("작전을 포기하고 남아있는 모든 학생의 정답을 확인하시겠습니까?")) return;
 
   state.isGivenUp = true;
   stopTimer();
@@ -479,7 +481,7 @@ function executeGiveUp() {
   finishGame(true, false);
 }
 
-// 16. 클리어 / 포기 완료 처리
+// 16. 클리어 / 포기 완료 처리 (5대 챌린지만 판정)
 function finishGame(isGivenUp = false, openModalImmediately = true) {
   state.isFinished = true;
   stopTimer();
@@ -497,6 +499,7 @@ function finishGame(isGivenUp = false, openModalImmediately = true) {
   giveUpBtn.onclick = () => clearModal.classList.remove('hidden');
 
   const opt = state.options;
+  // ⭐ 5대 핵심 챌린지만으로 올하드 판정 (콜라보 설정은 무관) ⭐
   const isAllHard = !isGivenUp && (opt.chaos === true && opt.variants === true && opt.silhouette === false && opt.grouping === false && opt.unreleased === true);
 
   const clearModalCard = document.getElementById('clearModalCard');
@@ -522,16 +525,17 @@ function finishGame(isGivenUp = false, openModalImmediately = true) {
   if (isGivenUp) {
     clearModalCard.classList.add('retired-active');
     clearStamp.textContent = 'OPERATION RETIRED';
-    resultTimeLabel.textContent = '중단 시점 (RETIRED TIME)';
+    resultTimeLabel.textContent = '작전 중단 시점 (RETIRED TIME)';
   } else if (isAllHard) {
     clearModalCard.classList.add('all-hard-active');
     clearStamp.textContent = 'PERFECT OPERATION';
-    resultTimeLabel.textContent = '소요 시간 (CLEAR TIME)';
+    resultTimeLabel.textContent = '작전 소요 시간 (CLEAR TIME)';
   } else {
     clearStamp.textContent = 'MISSION COMPLETE';
-    resultTimeLabel.textContent = '소요 시간 (CLEAR TIME)';
+    resultTimeLabel.textContent = '작전 소요 시간 (CLEAR TIME)';
   }
 
+  // 5대 핵심 챌린지 규칙 목록
   const ruleList = [
     { name: "1. 무질서 (Chaos)", status: opt.chaos ? "ON (활성)" : "OFF", hard: opt.chaos === true },
     { name: "2. 이격 학생 포함", status: opt.variants ? "ON (포함)" : "OFF", hard: opt.variants === true },
@@ -552,6 +556,17 @@ function finishGame(isGivenUp = false, openModalImmediately = true) {
     `;
     clearOptionsSummary.appendChild(item);
   });
+
+  // 콜라보를 껐을 경우 부가 항목으로 표시 (챌린지 점수 카운트에는 반영되지 않음)
+  if (!opt.collab) {
+    const extraItem = document.createElement('div');
+    extraItem.className = 'applied-opt-item';
+    extraItem.innerHTML = `
+      <div class="applied-opt-name" style="color:var(--ba-text-sub);">콜라보레이션 학원</div>
+      <div class="applied-opt-status">OFF (제외됨)</div>
+    `;
+    clearOptionsSummary.appendChild(extraItem);
+  }
 
   clearChallengeCount.textContent = `CHALLENGE ${hardCount} / 5`;
   clearChallengeCount.style.color = hardCount === 5 ? 'var(--hard-gold)' : 'var(--hard-accent)';
@@ -594,6 +609,7 @@ window.addEventListener('resize', () => {
   }
 });
 
+// 체크박스 클릭 시 챌린지 강조 업데이트
 document.querySelectorAll('.options-checklist input[type="checkbox"]').forEach(chk => {
   chk.addEventListener('change', updateOptionHighlights);
 });
