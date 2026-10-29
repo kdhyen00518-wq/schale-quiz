@@ -440,7 +440,9 @@ header.hud-bar {
   100% { transform: scale(1); opacity: 1; }
 }
 
-/* 모달 팝업 & 옵션 하이라이트 */
+/* ==============================================================
+   모달 팝업 & 옵션 스타일
+   ============================================================== */
 .modal-overlay {
   position: fixed;
   top: 0; left: 0; right: 0; bottom: 0;
@@ -544,6 +546,31 @@ header.hud-bar {
   border-color: var(--hard-accent);
 }
 
+/* ⭐ 서브 옵션 전용 구분선 및 스타일 ⭐ */
+.sub-options-divider {
+  height: 1px;
+  background: #e1e9f2;
+  margin: 6px 0 2px 0;
+}
+.checklist-item.sub-checklist-item {
+  padding: 7px 12px;
+  background: rgba(244, 248, 253, 0.65);
+  border-style: dashed;
+}
+.checklist-item.sub-checklist-item .item-title {
+  font-size: 13px;
+  font-weight: 800;
+  color: #4b5e71;
+}
+.checklist-item.sub-checklist-item .item-desc {
+  font-size: 11px;
+  color: var(--ba-text-sub);
+}
+.checklist-item.sub-checklist-item input:checked + .custom-check {
+  background: #4b6a88;
+  border-color: #4b6a88;
+}
+
 .custom-check {
   width: 20px; height: 20px; border: 2px solid #9fb4c7;
   border-radius: 4px; margin-right: 12px;
@@ -613,12 +640,11 @@ header.hud-bar {
   border-color: var(--hard-accent); color: var(--hard-accent);
 }
 
-/* ⭐ 1:1 정사각형 특전 일러스트 슬롯 (잘림 방지) ⭐ */
 .special-reward-slot {
   display: none;
   width: 100%;
-  max-width: 250px;             /* 아담한 크기로 중앙 배치 */
-  aspect-ratio: 1 / 1;          /* 1:1 정사각형 비율 유지 */
+  max-width: 250px;
+  aspect-ratio: 1 / 1;
   margin: 0 auto 14px auto;
   border-radius: 6px;
   border: 2px dashed #e2a522;
@@ -632,7 +658,7 @@ header.hud-bar {
 .special-reward-slot img {
   width: 100%;
   height: 100%;
-  object-fit: contain;          /* 1:1 이미지 밑부분 잘림 완전 방지 */
+  object-fit: contain;
   display: block;
 }
 .reward-placeholder-box {
