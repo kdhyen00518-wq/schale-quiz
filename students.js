@@ -615,7 +615,7 @@ const STUDENTS_DATA = [
     "aliases": [
       "수오리",
       "이오리 수영복",
-      "수영복 이즈미"
+      "수영복 이오리"
     ],
     "school": "게헨나",
     "club": "선도부",
