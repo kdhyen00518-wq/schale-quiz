@@ -63,7 +63,7 @@ body::before {
   flex-direction: column;
 }
 
-/* 상단 HUD (플로팅 UI) */
+/* 상단 HUD (기본 데스크톱) */
 header.hud-bar {
   position: relative;
   z-index: 20;
@@ -113,7 +113,23 @@ header.hud-bar {
   flex-wrap: wrap;
 }
 
-/* 평행사변형 (Skew) UI 베이스 */
+.hud-input-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.mobile-hud-toggle {
+  display: none; /* 데스크톱에서는 숨김 */
+}
+
+.hud-collapsible-group {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Skew 베이스 */
 .skew-box {
   transform: skewX(-10deg);
   border-radius: 4px;
@@ -173,7 +189,7 @@ header.hud-bar {
   font-size: 15px;
   font-weight: 700;
   color: var(--ba-text-dark);
-  width: 220px;
+  width: 230px;
 }
 
 /* HUD 점수 / 타이머 */
@@ -253,7 +269,7 @@ header.hud-bar {
   background: #fff3f3;
 }
 
-/* 학생 명부 스크롤 & 페이드아웃 마스크 */
+/* 학생 명부 그리드 */
 .academy-grid {
   flex: 1;
   min-height: 0;
@@ -286,19 +302,13 @@ header.hud-bar {
   );
 }
 
-.academy-grid::-webkit-scrollbar {
-  width: 6px;
-}
-.academy-grid::-webkit-scrollbar-track {
-  background: transparent;
-}
+.academy-grid::-webkit-scrollbar { width: 6px; }
+.academy-grid::-webkit-scrollbar-track { background: transparent; }
 .academy-grid::-webkit-scrollbar-thumb {
   background: rgba(255, 255, 255, 0.35);
   border-radius: 3px;
 }
-.academy-grid::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.6);
-}
+.academy-grid::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.6); }
 
 .masonry-col {
   flex: 1;
@@ -318,12 +328,8 @@ header.hud-bar {
   width: 100%;
 }
 
-.academy-grid.unified-mode {
-  display: block;
-}
-.academy-grid.unified-mode .academy-card {
-  max-width: 100%;
-}
+.academy-grid.unified-mode { display: block; }
+.academy-grid.unified-mode .academy-card { max-width: 100%; }
 .academy-grid.unified-mode .slots-container {
   grid-template-columns: repeat(auto-fill, minmax(64px, 1fr));
   gap: 10px;
@@ -441,7 +447,7 @@ header.hud-bar {
 }
 
 /* ==============================================================
-   모달 팝업 & 옵션 스타일
+   모달 팝업 & 옵션 하이라이트
    ============================================================== */
 .modal-overlay {
   position: fixed;
@@ -516,19 +522,25 @@ header.hud-bar {
 
 .modal-body-section {
   position: relative; z-index: 1;
-  padding: 20px 28px 26px 28px;
-  display: flex; flex-direction: column; gap: 14px;
+  padding: 18px 28px 24px 28px;
+  display: flex; flex-direction: column; gap: 12px;
 }
 .section-label {
   font-size: 12px; font-weight: 800; color: #55697d;
   letter-spacing: 0.8px;
 }
 
+.options-checklist {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
 .checklist-item {
   display: flex; align-items: center;
   background: rgba(255, 255, 255, 0.85);
   border: 1px solid #dbe6f0; border-radius: 6px;
-  padding: 10px 14px; cursor: pointer; user-select: none;
+  padding: 8px 14px; cursor: pointer; user-select: none;
   transition: all 0.15s ease;
 }
 .checklist-item:hover { background: #ffffff; border-color: #a8cded; }
@@ -539,37 +551,8 @@ header.hud-bar {
   background: #fffafa;
   box-shadow: 0 0 0 1px rgba(240, 78, 78, 0.25);
 }
-.checklist-item.is-hard .item-title {
-  color: #c52828;
-}
-.checklist-item.is-hard .custom-check {
-  border-color: var(--hard-accent);
-}
-
-/* ⭐ 서브 옵션 전용 구분선 및 스타일 ⭐ */
-.sub-options-divider {
-  height: 1px;
-  background: #e1e9f2;
-  margin: 6px 0 2px 0;
-}
-.checklist-item.sub-checklist-item {
-  padding: 7px 12px;
-  background: rgba(244, 248, 253, 0.65);
-  border-style: dashed;
-}
-.checklist-item.sub-checklist-item .item-title {
-  font-size: 13px;
-  font-weight: 800;
-  color: #4b5e71;
-}
-.checklist-item.sub-checklist-item .item-desc {
-  font-size: 11px;
-  color: var(--ba-text-sub);
-}
-.checklist-item.sub-checklist-item input:checked + .custom-check {
-  background: #4b6a88;
-  border-color: #4b6a88;
-}
+.checklist-item.is-hard .item-title { color: #c52828; }
+.checklist-item.is-hard .custom-check { border-color: var(--hard-accent); }
 
 .custom-check {
   width: 20px; height: 20px; border: 2px solid #9fb4c7;
@@ -587,8 +570,81 @@ header.hud-bar {
 }
 .checklist-item input:checked + .custom-check svg { opacity: 1; transform: scale(1); }
 
-.item-title { font-size: 14px; font-weight: 800; }
-.item-desc { font-size: 11.5px; color: var(--ba-text-sub); margin-top: 2px; }
+.item-title { font-size: 13.5px; font-weight: 800; }
+.item-desc { font-size: 11px; color: var(--ba-text-sub); margin-top: 1px; }
+
+/* 세부 설정 2×2 그리드 */
+.sub-settings-container {
+  margin-top: 2px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.btn-sub-toggle {
+  align-self: flex-start;
+  background: #edf4fa;
+  border: 1px solid #c9daec;
+  border-radius: 4px;
+  padding: 5px 11px;
+  font-size: 11.5px;
+  font-weight: 800;
+  color: #48627a;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.15s ease;
+}
+.btn-sub-toggle:hover {
+  background: #e1edf7;
+  color: var(--ba-blue-dark);
+}
+.btn-sub-toggle .arrow-indicator {
+  font-size: 9px;
+  transition: transform 0.2s ease;
+}
+.btn-sub-toggle.is-open .arrow-indicator {
+  transform: rotate(180deg);
+}
+
+.sub-settings-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  background: rgba(240, 246, 252, 0.6);
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px dashed #c9d8e8;
+}
+.sub-settings-grid.hidden {
+  display: none;
+}
+
+.sub-opt-btn {
+  background: #ffffff;
+  border: 1.5px solid #d3e1ee;
+  border-radius: 5px;
+  padding: 8px 10px;
+  font-size: 12px;
+  font-weight: 800;
+  color: #55697d;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.15s ease;
+  user-select: none;
+}
+.sub-opt-btn:hover {
+  background: #f7fbff;
+  border-color: #a4cbed;
+  color: var(--ba-text-dark);
+}
+.sub-opt-btn.is-active {
+  background: #e7f4fe;
+  border-color: var(--ba-blue-main);
+  color: var(--ba-blue-dark);
+  box-shadow: 0 0 0 1px var(--ba-blue-main);
+}
 
 .btn-start-skew {
   background: linear-gradient(135deg, #ffd43f 0%, #f59e0b 100%);
@@ -652,23 +708,15 @@ header.hud-bar {
   overflow: hidden;
   position: relative;
 }
-.clear-modal.all-hard-active .special-reward-slot {
-  display: block;
-}
+.clear-modal.all-hard-active .special-reward-slot { display: block; }
 .special-reward-slot img {
-  width: 100%;
-  height: 100%;
+  width: 100%; height: 100%;
   object-fit: contain;
   display: block;
 }
 .reward-placeholder-box {
-  display: none;
-  height: 100%;
-  padding: 20px 10px;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
+  display: none; height: 100%; padding: 20px 10px;
+  flex-direction: column; align-items: center; justify-content: center; gap: 6px;
 }
 .reward-placeholder-box .placeholder-text { font-size: 13px; font-weight: 800; color: #92400e; }
 .reward-placeholder-box .placeholder-sub { font-size: 11px; color: #b45309; }
@@ -710,9 +758,7 @@ header.hud-bar {
   background: #fff0f0;
   border-color: #ffd0d0;
 }
-.clear-modal.retired-active .clear-score-tag {
-  color: var(--hard-accent);
-}
+.clear-modal.retired-active .clear-score-tag { color: var(--hard-accent); }
 
 .clear-body-section {
   position: relative; z-index: 1;
@@ -743,3 +789,171 @@ header.hud-bar {
   box-shadow: 0 4px 12px rgba(18, 114, 188, 0.35);
 }
 .btn-retry-skew .skew-inner { font-size: 14.5px; font-weight: 800; color: #ffffff; gap: 6px; }
+
+/* ==============================================================
+   ⭐ 모바일 반응형 개선 (최적화) ⭐
+   ============================================================== */
+@media (max-width: 768px) {
+  body {
+    padding: 0 10px;
+  }
+
+  .tape-deco-left {
+    display: none;
+  }
+
+  /* 상단 로고 숨김 (입력창 세로 공간 확보) */
+  .brand-title {
+    display: none;
+  }
+
+  header.hud-bar {
+    padding: 12px 0 10px 0;
+    margin: 0;
+    display: block;
+    position: relative;
+    z-index: 50;
+  }
+
+  .hud-controls {
+    width: 100%;
+    position: relative;
+    gap: 0;
+  }
+
+  /* 검색창 + 토글 버튼 1열 전체 너비 배치 */
+  .hud-input-row {
+    width: 100%;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+
+  .input-parallelogram {
+    flex: 1;
+    min-width: 0;
+    height: 44px;
+    padding: 0 12px 0 8px;
+  }
+
+  .student-search-input {
+    width: 100%;
+    min-width: 0;
+    font-size: 14px;
+  }
+
+  .credit-chip {
+    width: 28px;
+    height: 28px;
+    margin-right: 8px;
+  }
+
+  /* 모바일 토글 버튼 활성화 */
+  .mobile-hud-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    background: #ffffff;
+    border: 1.5px solid rgba(255, 255, 255, 0.9);
+    cursor: pointer;
+    color: var(--ba-blue-dark);
+    flex-shrink: 0;
+  }
+  .mobile-hud-toggle:active,
+  .mobile-hud-toggle.is-active {
+    background: #eaf4fd;
+    border-color: var(--ba-blue-main);
+  }
+
+  /* 모바일 접이식 서브메뉴 (2×2 플로팅 팝업) */
+  .hud-collapsible-group {
+    display: none; /* 기본 접힘 상태 */
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0;
+    right: 0;
+    z-index: 100;
+    background: rgba(255, 255, 255, 0.98);
+    border-radius: 8px;
+    padding: 12px;
+    box-shadow: 0 12px 30px rgba(0, 30, 70, 0.28);
+    border: 1.5px solid #dce8f5;
+    backdrop-filter: blur(10px);
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+
+  .hud-collapsible-group.is-open {
+    display: grid;
+    animation: dropDownMobile 0.2s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+  }
+
+  @keyframes dropDownMobile {
+    from { opacity: 0; transform: translateY(-8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .hud-collapsible-group .skew-box {
+    width: 100%;
+    height: 42px;
+    transform: none; /* 모바일 메뉴 안에서는 정렬을 위해 skew 제거 */
+    border: 1px solid #dbe6f0;
+  }
+
+  .hud-collapsible-group .skew-inner {
+    transform: none;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .hud-collapsible-group .btn-skew-action {
+    height: 42px;
+    padding: 0;
+  }
+  .hud-collapsible-group .btn-skew-action .btn-text {
+    justify-content: center;
+    font-size: 13px;
+  }
+
+  .hud-stat-box.timer-box,
+  .hud-stat-box.recruit-box {
+    width: 100%;
+    min-width: 0;
+    padding: 0;
+  }
+  .hud-stat-text {
+    font-size: 13.5px;
+    gap: 6px;
+  }
+  .hud-tag {
+    font-size: 10px;
+    padding: 1px 5px;
+  }
+
+  /* 보드 스크롤 여백 모바일에 맞게 축소 */
+  .academy-grid {
+    margin-top: -64px;
+    padding-top: 68px;
+    padding-bottom: 24px;
+    gap: 12px;
+  }
+
+  .academy-card {
+    padding: 10px;
+  }
+
+  .slots-container {
+    gap: 4px;
+  }
+
+  /* 모달 크기 반응형 */
+  .note-modal, .clear-modal {
+    max-width: 95vw;
+  }
+  .modal-header-section, .modal-body-section {
+    padding-left: 18px;
+    padding-right: 18px;
+  }
+}
