@@ -861,7 +861,7 @@ const STUDENTS_DATA = [
     "isVariant": true,
     "isPlayable": false,
     "isPlayableJp": true,
-    "isAppearedKr": true
+    "isAppearedKr": false
   },
   {
     "id": "iroha",
@@ -893,7 +893,7 @@ const STUDENTS_DATA = [
     "isVariant": true,
     "isPlayable": false,
     "isPlayableJp": true,
-    "isAppearedKr": true
+    "isAppearedKr": false
   },
   {
     "id": "satsuki",
@@ -925,7 +925,7 @@ const STUDENTS_DATA = [
     "isVariant": true,
     "isPlayable": false,
     "isPlayableJp": true,
-    "isAppearedKr": true
+    "isAppearedKr": false
   },
   {
     "id": "chiaki",
@@ -957,7 +957,7 @@ const STUDENTS_DATA = [
     "isVariant": true,
     "isPlayable": false,
     "isPlayableJp": true,
-    "isAppearedKr": true
+    "isAppearedKr": false
   },
   {
     "id": "ibuki",
@@ -989,7 +989,7 @@ const STUDENTS_DATA = [
     "isVariant": true,
     "isPlayable": false,
     "isPlayableJp": true,
-    "isAppearedKr": true
+    "isAppearedKr": false
   },
   {
     "id": "sena",
@@ -1053,7 +1053,7 @@ const STUDENTS_DATA = [
     "isVariant": true,
     "isPlayable": false,
     "isPlayableJp": true,
-    "isAppearedKr": true
+    "isAppearedKr": false
   },
   {
     "id": "megu",
