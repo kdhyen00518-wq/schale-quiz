@@ -1849,13 +1849,15 @@ const STUDENTS_DATA = [
   {
     "id": "hibiki_cheerleader",
     "name": "히비키 (응원복)",
-    "fullName": "네코즈카 히비키 응원복",
+    "fullName": "네코즈카 히비키 응원단",
     "school": "밀레니엄",
     "club": "엔지니어부",
     "aliases": [
       "응비키",
       "히비키 응원복",
       "응원복 히비키",
+      "응원단 히비키",
+      "히비키 응원단",
       "치비키"
     ],
     "image": "assets/images/hibiki_cheerleader.webp",
@@ -1882,13 +1884,15 @@ const STUDENTS_DATA = [
   {
     "id": "utaha_cheerleader",
     "name": "우타하 (응원복)",
-    "fullName": "시라이시 우타하 응원복",
+    "fullName": "시라이시 우타하 응원단",
     "school": "밀레니엄",
     "club": "엔지니어부",
     "aliases": [
       "응타하",
       "우타하 응원복",
       "응원복 우타하",
+      "응원단 우타하",
+      "우타하 응원단",
       "치타하"
     ],
     "image": "assets/images/utaha_cheerleader.webp",
@@ -1915,13 +1919,15 @@ const STUDENTS_DATA = [
   {
     "id": "kotori_cheerleader",
     "name": "코토리 (응원복)",
-    "fullName": "토요미 코토리 응원복",
+    "fullName": "토요미 코토리 응원단",
     "school": "밀레니엄",
     "club": "엔지니어부",
     "aliases": [
       "응토리",
       "코토리 응원복",
       "응원복 코토리",
+      "코토리 응원단",
+      "코토리 응원복",
       "치토리"
     ],
     "image": "assets/images/kotori_cheerleader.webp",
