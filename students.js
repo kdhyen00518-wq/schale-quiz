@@ -4145,7 +4145,7 @@ const STUDENTS_DATA = [
   {
     "id": "kirino",
     "name": "키리노",
-    "fullName": "나가츠카사 키리노",
+    "fullName": "나카츠카사 키리노",
     "school": "발키리",
     "club": "생활안전국",
     "aliases": [
@@ -4160,7 +4160,7 @@ const STUDENTS_DATA = [
   {
     "id": "kirino_swimsuit",
     "name": "키리노 (수영복)",
-    "fullName": "나가츠카사 키리노 수영복",
+    "fullName": "나카츠카사 키리노 수영복",
     "school": "발키리",
     "club": "생활안전국",
     "aliases": [
