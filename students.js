@@ -1,4 +1,4 @@
-// SCHALE Student Quiz Database
+// SCHALE Student Quiz Database 
 // Generated automatically from students.xlsx
 
 const STUDENTS_DATA = [
