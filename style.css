@@ -63,7 +63,7 @@ body::before {
   flex-direction: column;
 }
 
-/* 상단 HUD (기본 데스크톱) */
+/* 상단 HUD (기본 데스크톱) */ 
 header.hud-bar {
   position: relative;
   z-index: 20;
