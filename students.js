@@ -3050,7 +3050,7 @@ const STUDENTS_DATA = [
   {
     "id": "nagusa_swimsuit",
     "name": "나구사 (수영복)",
-    "fullName": "구료 나구사 수영복",
+    "fullName": "고료 나구사 수영복",
     "school": "백귀야행",
     "club": "백화요란",
     "aliases": [
